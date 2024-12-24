@@ -1,0 +1,373 @@
+/* Timetable Header Styles */
+h1 {
+    text-align: center;
+    color: #1a237e;
+    margin: 30px 0;
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 15px;
+    border-bottom: 4px solid #1976d2;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Table Styles */
+.dataframe {
+    width: 95%;
+    margin: 30px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    overflow-x: auto; /* Enable horizontal scroll when needed */
+    white-space: nowrap; /* Prevent text wrapping */
+    display: block; /* Allow horizontal scroll */
+}
+
+.dataframe th, .dataframe td {
+    padding: 15px 20px;
+    text-align: center;
+    border: none;
+    position: relative;
+}
+
+.dataframe thead th {
+    background-color: #1976d2;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    border-bottom: 3px solid #1565c0;
+    position: sticky; /* Keep header visible while scrolling */
+    top: 0;
+    z-index: 1;
+}
+
+.dataframe tbody tr {
+    border-bottom: 1px solid #e3f2fd;
+    transition: all 0.3s ease;
+}
+
+.dataframe tbody tr:nth-child(even) {
+    background-color: #f8faff;
+}
+
+.dataframe tbody tr:hover {
+    background-color: #e3f2fd;
+    transform: scale(1.01);
+}
+
+.dataframe td:first-child {
+    font-weight: 700;
+    background-color: #1976d2;
+    color: #fff;
+    border-right: 3px solid #1565c0;
+    position: sticky; /* Keep first column visible while scrolling */
+    left: 0;
+    z-index: 2;
+}
+
+/* Button Styles */
+.dataframe button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: transparent;
+    border: none;
+    color: #1976d2;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dataframe button:hover {
+    background-color: rgba(25, 118, 210, 0.1);
+    color: #1565c0;
+    transform: translateY(-2px);
+}
+
+.dataframe button:active {
+    transform: translateY(0);
+}
+
+.dataframe button:focus {
+    outline: none;
+    background-color: rgba(25, 118, 210, 0.15);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    z-index: 1000;
+    width: 90%;
+    max-width: 1200px;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.modal-content {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.modal-content h2 {
+    color: #1a237e;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #1976d2;
+    padding-bottom: 10px;
+}
+
+.modal-content p {
+    margin: 18px 0;
+    font-size: 1.15rem;
+    color: #333;
+    line-height: 1.6;
+    padding: 8px 0;
+}
+
+.modal-content p strong {
+    color: #1976d2;
+    margin-right: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.student-attendance {
+    margin-top: 0;
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8faff;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.08);
+    flex: 1;
+}
+
+.student-entry {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.student-entry:hover {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.attendance-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.attendance-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.attendance-options label:has(input[value="present"]) {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.attendance-options label:has(input[value="absent"]) {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.attendance-options label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.attendance-options input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: currentColor;
+}
+
+.student-attendance button {
+    display: block;
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #1976d2, #1565c0);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+}
+
+.student-attendance button:hover {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+}
+
+.student-attendance button:active {
+    transform: translateY(1px);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    color: #666;
+    transition: all 0.3s ease;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+}
+
+.close-btn:hover {
+    color: #1976d2;
+    background-color: #e3f2fd;
+    transform: rotate(90deg);
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 999;
+    backdrop-filter: blur(4px);
+    animation: overlayFadeIn 0.3s ease-out;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Add responsive design */
+@media screen and (max-width: 768px) {
+    .dataframe {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    
+    .dataframe th, .dataframe td {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+        padding: 10px;
+    }
+    
+    .modal {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .modal-content {
+        flex-direction: column;
+    }
+
+    .student-entry {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .attendance-options {
+        justify-content: center;
+    }
+}
+
+#attendanceRecordsSection {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.attendance-record {
+    background-color: #f5f5f5;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.attendance-record h3 {
+    margin: 0 0 10px 0;
+    color: #1976d2;
+}
+
+.attendance-record p {
+    margin: 5px 0;
+}
+
+.attendance-record button {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.attendance-record button:hover {
+    background-color: #1565c0;
+}

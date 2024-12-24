@@ -1,0 +1,591 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #fff;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 110px;
+    position: relative;
+}
+
+.navbar-logo .logo {
+    width: 120px;
+}
+
+.navbar-links {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar-links li {
+    margin-left: 20px;
+}
+
+.navbar-links a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+    color: #3498DB;
+}
+
+.navbar-links .profile {
+    position: relative;
+}
+
+/* Style for the profile link */
+.navbar-links .profile a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Initially hide the dropdown */
+.navbar-links .profile .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #34495E;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 230px;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+/* Show dropdown when hovering over profile or dropdown */
+.navbar-links .profile:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+}
+
+.navbar-links .profile .dropdown-content p:first-child {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.navbar-links .profile .dropdown-content > * {
+    margin: 5px 0;
+}
+
+/* Style for logout button */
+.navbar-links .profile .dropdown-content button {
+    width: 100%;
+    background-color: #E74C3C;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-links .profile .dropdown-content button:hover {
+    background-color: #C0392B;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Left side: Student List */
+.student-list-container {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#search-bar {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    transition: border-color 0.2s ease;
+    margin-bottom: 10px;
+}
+
+#search-bar:focus {
+    outline: none;
+    border-color: #999;
+}
+
+#search-bar::placeholder {
+    color: #999;
+}
+
+.student-list-container h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+#student-list {
+    list-style-type: none;
+}
+
+#student-list li {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#student-list li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Class Folder Styles */
+.class-folder h4 {
+    background: linear-gradient(135deg, #2a97e0, #208cd3);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.class-folder h4:hover {
+    background: linear-gradient(135deg, #2980b9, #2980bb);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.class-folder h4:active {
+    transform: translateY(0);
+}
+
+/* Add Student Button */
+.add-student-btn {
+    background: linear-gradient(135deg, #378def, #4396f5);
+    color: white;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 25px auto;
+    width: fit-content;
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.add-student-btn:hover {
+    background: linear-gradient(135deg, #2f88ed, #2f88ed);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(33, 171, 240, 0.5);
+}
+
+.add-student-btn:active {
+    transform: scale(0.97);
+}
+
+/* Add Student Form Styles */
+.add-student-form {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                0 0 100px rgba(41, 120, 188, 0.3),
+                0 0 80px rgba(52, 152, 219, 0.2),
+                0 0 60px rgba(155, 89, 182, 0.2),
+                0 0 40px rgba(46, 204, 113, 0.2);
+    max-width: 800px;
+    width: 95%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 1000;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.add-student-form.active {
+    display: block;
+    animation: formSlideIn 0.6s ease forwards;
+}
+
+@keyframes formSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.add-student-form h2 {
+    color: #2c3e50;
+    margin-bottom: 35px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.form-group input::placeholder {
+    color: #95a5a6;
+}
+/* Right side: Student Details */
+.student-details-container {
+    flex: 2;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.student-details-container h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.student-details-container p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.calendar {
+    margin-top: 20px;
+}
+
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.calendar-day {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-day span {
+    display: block;
+    font-weight: bold;
+}
+
+#attendance-buttons {
+    margin-top: 20px;
+}
+
+#attendance-buttons button {
+    background-color: #27AE60;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+#attendance-buttons button:hover {
+    background-color: #2ECC71;
+}
+
+#attendance-buttons button:nth-child(2) {
+    background-color: #E74C3C;
+}
+
+#attendance-buttons button:nth-child(2):hover {
+    background-color: #C0392B;
+}
+
+/* Attendance Summary Styles */
+.attendance-summary {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 35px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.attendance-summary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.attendance-summary h4 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.stat-item {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(52, 152, 219, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stat-item:hover::before {
+    opacity: 1;
+}
+
+.stat-label {
+    display: block;
+    color: #7f8c8d;
+    font-size: 16px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    display: block;
+    color: #2c3e50;
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#attendance-percentage {
+    color: #27ae60;
+    font-size: 36px;
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+    /* Navbar Adjustments */
+    .navbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+        background-color: #fff;
+    }
+
+    .navbar-logo .logo {
+        width: 80px;
+        margin-bottom: 15px;
+    }
+
+    .navbar-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        display: none;
+        position: absolute;
+        top: 100px; 
+        left: 0;
+        background-color: #fff;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+    }
+
+    .navbar-links li {
+        margin: 10px 0;
+    }
+
+    .navbar-links a {
+        padding: 10px 15px;
+        font-size: 16px;
+        color: black;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar-links a:hover {
+        color: #3498DB;
+    }
+
+    .menu-toggle {
+        display: block;
+        font-size: 30px;
+        cursor: pointer;
+        border: none;
+        background: none;
+        color: black;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    /* Dashboard layout adjustments for smaller screens */
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .student-list-container, .student-details-container {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        padding: 10px;
+    }
+
+    #calendar-grid div {
+        font-size: 12px;
+        padding: 10px;
+        text-align: center;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+
+    .login-box {
+        width: 90%;
+        max-width: 400px;
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .add-student-form {
+        width: 95%;
+        padding: 20px;
+        margin: 10px auto;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .add-student-btn {
+        width: 90%;
+        margin: 15px auto;
+        padding: 12px 24px;
+    }
+}
+
+.navbar-links.active {
+    display: flex;
+    background-color: #fff;
+    margin: 1px;
+}

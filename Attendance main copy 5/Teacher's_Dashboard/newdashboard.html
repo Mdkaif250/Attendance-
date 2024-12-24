@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="script.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <style>
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #f4f4f4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .student-count {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .date-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .date-selector i {
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .filter-dropdown {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .view-toggle {
+            padding: 0.5rem 1rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Calendar Styles */
+        .calendar-container {
+            margin: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .weekend {
+            background: #f8f9fa;
+        }
+
+        .holiday {
+            background: #e3f2fd;
+        }
+
+        .present {
+            background: #c8e6c9;
+        }
+
+        .absent {
+            background: #ffcdd2;
+        }
+
+        .late {
+            background: #fff9c4;
+        }
+
+        .leave {
+            background: #e1bee7;
+        }
+
+        /* Student List Styles */
+        .student-list {
+            margin: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .student-search {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .student-table th,
+        .student-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .student-info-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="./logo.png" alt="College Logo" class="logo">
+        </div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span class="bar"><i class="fa-solid fa-bars"></i></span>
+        </div>
+        <ul class="navbar-links" id="navbar-links">
+            <li><a href="dashboard.html">Home</a></li>
+            <li class="profile">
+                <a href="#" id="profile-link">Profile</a>
+                <div class="dropdown-content" id="profile-dropdown">
+                    <p id="teacher-name"></p>
+                    <p id="teacher-email"></p>
+                    <button onclick="logout()">Logout</button>
+                </div>
+            </li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">New dashboard</a></li>
+            <li><a href="#">Assignments</a></li>
+            <li><a href="#" onclick="document.querySelector('.add-student-form').classList.toggle('active')">Add Student</a></li>
+            <li><a href="profil.html">Upload Excel</a></li>
+            <li><a href="timetable.html">Time Table</a></li>
+        </ul>
+    </nav>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="student-count">
+            Total Students: <span id="total-students">0</span>
+        </div>
+        
+        <div class="date-selector">
+            <i class="fas fa-chevron-left" id="prev-month"></i>
+            <span id="current-month">JAN 2021</span>
+            <i class="fas fa-chevron-right" id="next-month"></i>
+        </div>
+        
+        <div class="filters">
+            <select class="filter-dropdown" id="department-filter">
+                <option value="">Department</option>
+                <option value="BCA">BCA</option>
+                <option value="MCA">MCA</option>
+                <option value="BSc">BSc</option>
+            </select>
+            
+            <select class="filter-dropdown" id="sort-filter">
+                <option value="name">Sort by Name</option>
+                <option value="roll">Sort by Roll No</option>
+            </select>
+        </div>
+        
+        <button class="view-toggle" id="toggle-view">
+            Toggle View
+        </button>
+    </div>
+</body>
+</html>

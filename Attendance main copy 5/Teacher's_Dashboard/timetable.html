@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time Table</title>
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="timetable.css">
+    <script src="timetable.js"></script>
+    <script src="script.js"></script>
+    <style>
+        .highlight {
+            background-color: #28a745; /* Green background for active subjects */
+            color: white; /* White text color */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="./logo.png" alt="College Logo" class="logo">
+        </div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span class="bar"><i class="fa-solid fa-bars"></i></span>
+        </div>
+        <ul class="navbar-links" id="navbar-links">
+            <li><a href="dashboard.html">Home</a></li>
+            <li class="profile">
+                <a href="#" id="profile-link">Profile</a>
+                <div class="dropdown-content" id="profile-dropdown">
+                    <p id="teacher-name"></p>
+                    <p id="teacher-email"></p>
+                    <button onclick="logout()">Logout</button>
+                </div>
+            </li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="newdashboard.html">New dashboard</a></li>
+            <li><a href="#">Assignments</a></li>
+            <li><a href="#" onclick="document.querySelector('.add-student-form').classList.toggle('active')">Add Student</a></li>
+            <li><a href="profil.html">Upload Excel</a></li>
+            <li><a href="timetable.html">Time Table</a></li>
+        </ul>
+    </nav>
+
+    <h1>Attendance for Lectures</h1>
+
+    <!-- Modal -->
+    <div id="lectureModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Lecture Details</h2>
+            <div id="modalText"></div>
+            
+            <!-- Student Attendance List -->
+            <div class="student-attendance">
+                <h3>Student Attendance</h3>
+                <div class="student-list">
+                    <!-- Student entries will be populated dynamically -->
+                </div>
+                <button onclick="saveAttendance()">Save Changes</button>
+                <button onclick="deleteAttendance()" style="background: linear-gradient(135deg, #dc3545, #c82333);">Delete Details</button>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="overlay"></div>
+
+    <table border="1" class="dataframe">
+        <thead>
+            <tr style="text-align: right;">
+                <th>DAY/TIME</th>
+                <th>09.00 am to 11.00 am</th>
+                <th>11.00 am to 11.15 am</th>
+                <th>11.15 am to 12.15 pm</th>
+                <th>12.15 pm to 1.15 pm</th>
+                <th>1.15 pm to 1.50 pm</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mon</td>
+                <td><button onclick="showLectureDetails(this, 'Mon')">C++ (B3)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Mon')">DBMS (B4)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Mon')">Operating System Concepts and Introduction to Linux</button></td>
+                <td><button onclick="showLectureDetails(this, 'Mon')">Open Elective 3- Discrete Mathematics</button></td>
+                <td><button onclick="showLectureDetails(this, 'Mon')">Skill Enhancement Course Elect Visualization Tool (Power BI)</button></td>
+            </tr>
+            <tr>
+                <td>Tue</td>
+                <td><button onclick="showLectureDetails(this, 'Tue')">C++ (B3)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Tue')">DBMS (B4)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Tue')">Operating System Concepts and Introduction to Linux</button></td>
+                <td><button onclick="showLectureDetails(this, 'Tue')">Open Elective 3- Discrete Mathematics</button></td>
+                <td><button onclick="showLectureDetails(this, 'Tue')">Skill Enhancement Course Elect Visualization Tool (Power BI)</button></td>
+            </tr>
+            <tr>
+                <td>Wed</td>
+                <td><button onclick="showLectureDetails(this, 'Wed')">DBMS (B3)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Wed')">C++ (B4)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Wed')">Operating System Concepts and Introduction to Linux</button></td>
+                <td><button onclick="showLectureDetails(this, 'Wed')">Open Elective 3- Discrete Mathematics</button></td>
+                <td><button onclick="showLectureDetails(this, 'Wed')">Skill Enhancement Course Elect Visualization Tool (Power BI)</button></td>
+            </tr>
+            <tr>
+                <td>Thu</td>
+                <td><button onclick="showLectureDetails(this, 'Thu')">DBMS (B3)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Thu')">C++ (B4)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Thu')">Object Oriented Programming Using C++</button></td>
+                <td><button onclick="showLectureDetails(this, 'Thu')">Database Management System (DBMS)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Thu')">Operating System Concepts and Introduction to Linux</button></td>
+            </tr>
+            <tr>
+                <td>Fri</td>
+                <td><button onclick="showLectureDetails(this, 'Fri')">Database Management System (DBMS)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Fri')">Object Oriented Programming Using C++</button></td>
+                <td><button onclick="showLectureDetails(this, 'Fri')">-</button></td>
+                <td><button onclick="showLectureDetails(this, 'Fri')">Database Management System (DBMS)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Fri')">-</button></td>
+            </tr>
+            <tr>
+                <td>Sat</td>
+                <td><button onclick="showLectureDetails(this, 'Sat')">Object Oriented Programming Using C++</button></td>
+                <td><button onclick="showLectureDetails(this, 'Sat')">Database Management System (DBMS)</button></td>
+                <td><button onclick="showLectureDetails(this, 'Sat')">Guest Lecture By Industry Expert</button></td>
+                <td><button onclick="showLectureDetails(this, 'Sat')">Guest Lecture By Industry Expert</button></td>
+                <td><button onclick="showLectureDetails(this, 'Sat')">Value added course Elective 1 Indian Environment Sustainable Development & Living</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Attendance Records Display Section -->
+    <div id="attendanceRecordsSection">
+        <h2>Saved Attendance Records</h2>
+        <div id="attendanceRecordsList"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let currentLectureDetails = null;
+
+        // Function to display saved attendance records
+        function displayAttendanceRecords() {
+            const recordsList = document.getElementById('attendanceRecordsList');
+            const attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+            
+            recordsList.innerHTML = '';
+            
+            attendanceRecords.forEach(record => {
+                const recordDiv = document.createElement('div');
+                recordDiv.className = 'attendance-record';
+                
+                let presentCount = 0;
+                let totalStudents = 0;
+                
+                for (const rollNo in record.records) {
+                    totalStudents++;
+                    if (record.records[rollNo].status === 'Present') {
+                        presentCount++;
+                    }
+                }
+                
+                recordDiv.innerHTML = `
+                    <h3>${record.subject}</h3>
+                    <p>Date: ${record.date}</p>
+                    <p>Time: ${record.time}</p>
+                    <p>Present: ${presentCount}/${totalStudents} students</p>
+                    <button onclick="showDetailedAttendance('${record.date}', '${record.subject}', '${record.time}')">
+                        View/Edit Details
+                    </button>
+                `;
+                
+                recordsList.appendChild(recordDiv);
+            });
+        }
+
+        function showDetailedAttendance(date, subject, time, day) {
+            const attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+            const record = attendanceRecords.find(r => 
+                r.date === date && 
+                r.subject === subject && 
+                r.time === time
+            );
+            
+            if (record) {
+                currentLectureDetails = {
+                    date: date,
+                    subject: subject,
+                    time: time
+                };
+
+                const modal = document.getElementById('lectureModal');
+                const modalText = document.getElementById('modalText');
+                const studentList = document.querySelector('.student-list');
+
+                modalText.innerHTML = `
+                    <div class="editable-fields">
+                        <p><strong>Date:</strong> ${date}</p>
+                        <p><strong>Subject:</strong> ${subject}</p>
+                        <p><strong>Time:</strong> ${time}</p>
+                        <p><strong>Day:</strong> ${day}</p>
+                    </div>
+                `;
+
+                studentList.innerHTML = '';
+                
+                for (const rollNo in record.records) {
+                    const student = record.records[rollNo];
+                    const studentEntry = document.createElement('div');
+                    studentEntry.className = 'student-entry';
+                    
+                    studentEntry.innerHTML = `
+                        <span>${student.name} (${rollNo})</span>
+                        <div class="attendance-options">
+                            <label>
+                                <input type="radio" name="attendance_${rollNo}" value="absent" 
+                                    ${student.status === 'Absent' ? 'checked' : ''}> Absent
+                            </label>
+                            <label>
+                                <input type="radio" name="attendance_${rollNo}" value="present" 
+                                    ${student.status === 'Present' ? 'checked' : ''}> Present
+                            </label>
+                        </div>
+                    `;
+                    
+                    studentList.appendChild(studentEntry);
+                }
+                
+                modal.style.display = 'block';
+                document.getElementById('overlay').style.display = 'block';
+            }
+        }
+
+        function showLectureDetails(button, day) {
+            const modal = document.getElementById('lectureModal');
+            const overlay = document.getElementById('overlay');
+            const modalText = document.getElementById('modalText');
+            const studentList = document.querySelector('.student-list');
+            
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const subject = button.textContent;
+            const time = button.closest('table').rows[0].cells[button.parentNode.cellIndex].textContent;
+
+            currentLectureDetails = {
+                date: formattedDate,
+                subject: subject,
+                day: day,
+                time: time
+            };
+            
+            modalText.innerHTML = `
+                <div class="editable-fields">
+                    <p><strong>Date:</strong> ${formattedDate}</p>
+                    <p><strong>Subject:</strong> ${subject}</p>
+                    <p><strong>Time:</strong> ${time}</p>
+                    <p><strong>Day:</strong> ${day}</p>
+                </div>
+            `;
+
+            const savedAttendance = getSavedAttendance(formattedDate, subject, time);
+            studentList.innerHTML = '';
+
+            for (const rollNo in studentsData) {
+                const student = studentsData[rollNo];
+                const studentEntry = document.createElement('div');
+                studentEntry.className = 'student-entry';
+                
+                const savedStatus = savedAttendance && savedAttendance.records && 
+                                  savedAttendance.records[rollNo] ? 
+                                  savedAttendance.records[rollNo].status === 'Present' : false;
+
+                studentEntry.innerHTML = `
+                    <span>${student.name} (${rollNo})</span>
+                    <div class="attendance-options">
+                        <label>
+                            <input type="radio" name="attendance_${rollNo}" value="absent" ${!savedStatus ? 'checked' : ''}> Absent
+                        </label>
+                        <label>
+                            <input type="radio" name="attendance_${rollNo}" value="present" ${savedStatus ? 'checked' : ''}> Present
+                        </label>
+                    </div>
+                `;
+                studentList.appendChild(studentEntry);
+            }
+            
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('lectureModal');
+            const overlay = document.getElementById('overlay');
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+            currentLectureDetails = null;
+        }
+
+        function getSavedAttendance(date, subject, time) {
+            const attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+            return attendanceRecords.find(record => 
+                record.date === date && 
+                record.subject === subject && 
+                record.time === time
+            );
+        }
+
+        // Function to get all lectures for a specific day
+function getAllLecturesForDay(day) {
+    const lectures = {
+        'Monday': ['C++ (B3)', 'DBMS (B4)', 'Operating System Concepts and Introduction to Linux', 'Open Elective 3- Discrete Mathematics', 'Skill Enhancement Course Elect Visualization Tool (Power BI)'],
+        'Tuesday': ['C++ (B3)', 'DBMS (B4)', 'Operating System Concepts and Introduction to Linux', 'Open Elective 3- Discrete Mathematics', 'Skill Enhancement Course Elect Visualization Tool (Power BI)'],
+        'Wednesday': ['DBMS (B3)', 'C++ (B4)', 'Operating System Concepts and Introduction to Linux', 'Open Elective 3- Discrete Mathematics', 'Skill Enhancement Course Elect Visualization Tool (Power BI)'],
+        'Thursday': ['DBMS (B3)', 'C++ (B4)', 'Object Oriented Programming Using C++', 'Database Management System (DBMS)', 'Operating System Concepts and Introduction to Linux'],
+        'Friday': ['Database Management System (DBMS)', 'Object Oriented Programming Using C++', '-', 'Database Management System (DBMS)', '-'],
+        'Saturday': ['Object Oriented Programming Using C++', 'Database Management System (DBMS)', 'Guest Lecture By Industry Expert', 'Guest Lecture By Industry Expert', 'Value added course Elective 1 Indian Environment Sustainable Development & Living']
+    };
+    return lectures[day] || [];
+}
+
+// Function to save attendance
+function saveAttendance() {
+    if (!currentLectureDetails) {
+        alert('Error: Lecture details not found');
+        return;
+    }
+
+    const attendanceData = {};
+    const studentEntries = document.querySelectorAll('.student-entry');
+    
+    studentEntries.forEach(entry => {
+        const studentName = entry.querySelector('span').textContent.split(' (')[0];
+        const rollNo = entry.querySelector('span').textContent.match(/\(([^)]+)\)/)[1];
+        const isPresent = entry.querySelector('input[value="present"]').checked;
+        attendanceData[rollNo] = {
+            name: studentName,
+            status: isPresent ? 'Present' : 'Absent',
+            date: currentLectureDetails.date,
+            subject: currentLectureDetails.subject,
+            day: currentLectureDetails.day,
+            time: currentLectureDetails.time
+        };
+    });
+
+    // Check if the student is present in all lectures for the day
+    const allLectures = getAllLecturesForDay(currentLectureDetails.day);
+    const studentsPresent = Object.keys(attendanceData).filter(rollNo => attendanceData[rollNo].status === 'Present');
+
+    // Mark students as default present if they attended all lectures
+    studentsPresent.forEach(rollNo => {
+        if (studentsPresent.length === allLectures.length) {
+            attendanceData[rollNo].status = 'Present'; // Mark as default present
+        }
+    });
+
+    let attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+    
+    const existingIndex = attendanceRecords.findIndex(record => 
+        record.date === currentLectureDetails.date && 
+        record.subject === currentLectureDetails.subject && 
+        record.time === currentLectureDetails.time
+    );
+
+    const newRecord = {
+        date: currentLectureDetails.date,
+        subject: currentLectureDetails.subject,
+        day: currentLectureDetails.day,
+        time: currentLectureDetails.time,
+        records: attendanceData
+    };
+
+    if (existingIndex !== -1) {
+        attendanceRecords[existingIndex] = newRecord;
+    } else {
+        attendanceRecords.push(newRecord);
+    }
+    
+    localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+    displayAttendanceRecords();
+    alert('Attendance saved successfully!');
+    closeModal();
+}
+
+        function deleteAttendance() {
+            if (!currentLectureDetails) {
+                alert('Error: Lecture details not found');
+                return;
+            }
+
+            if (confirm('Are you sure you want to delete this attendance record?')) {
+                let attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+                
+                attendanceRecords = attendanceRecords.filter(record => 
+                    !(record.date === currentLectureDetails.date && 
+                      record.subject === currentLectureDetails.subject && 
+                      record.time === currentLectureDetails.time)
+                );
+                
+                localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
+                displayAttendanceRecords();
+                alert('Attendance record deleted successfully!');
+                closeModal();
+            }
+        }
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('lectureModal');
+            if (event.target == document.getElementById('overlay')) {
+                closeModal();
+            }
+        }
+
+        // Function to get the current day and time
+        function getCurrentDayAndTime() {
+            const today = new Date();
+            const day = today.toLocaleString('en-US', { weekday: 'long' });
+            const hours = today.getHours();
+            const minutes = today.getMinutes();
+            return { day, time: `${hours}.${minutes < 10 ? '0' + minutes : minutes}` };
+        }
+
+        // Function to disable buttons for past days and times and highlight active subjects
+        function disablePastButtons() {
+            const { day, time } = getCurrentDayAndTime();
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const currentDayIndex = days.indexOf(day);
+            
+            const rows = document.querySelectorAll('.dataframe tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    const button = cell.querySelector('button');
+                    if (button) {
+                        const subjectTime = button.closest('table').rows[0].cells[index].textContent;
+                        const subjectDay = row.cells[0].textContent;
+
+                        // Disable button if it's not today
+                        if (subjectDay !== day) {
+                            button.disabled = true;
+                        } else {
+                            // Further logic to disable based on time can be added here
+                            const subjectHour = parseInt(subjectTime.split('.')[0]);
+                            const subjectMinute = parseInt(subjectTime.split('.')[1].split(' ')[0]);
+                            const subjectTimeInMinutes = subjectHour * 60 + subjectMinute;
+                            const currentTimeInMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+
+                            if (subjectTimeInMinutes < currentTimeInMinutes) {
+                                button.disabled = true;
+                            } else {
+                                // Highlight the button if it's the current subject
+                                button.classList.add('highlight');
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        // Call the function to disable buttons on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayAttendanceRecords();
+            disablePastButtons(); // Disable buttons for past days and times
+        });
+    </script>
+
+</body>
+</html>

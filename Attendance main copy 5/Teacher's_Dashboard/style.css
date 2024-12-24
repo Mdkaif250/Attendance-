@@ -1,0 +1,26 @@
+/* Styles for student list */
+.student-list {
+    position: relative; 
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: none; /* Initially hide student list */
+}
+
+/* Styles for class heading */
+.class-heading {
+    cursor: pointer;
+}
+
+/* Styles for attendance summary */
+.attendance-summary {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 15px 0;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+/* Additional styles for hover effects, colors, etc. can be added here */
